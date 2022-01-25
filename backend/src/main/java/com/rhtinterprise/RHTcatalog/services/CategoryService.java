@@ -2,6 +2,7 @@ package com.rhtinterprise.RHTcatalog.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
@@ -27,7 +28,7 @@ public class CategoryService {
 	public List<CategoryDTO> findAll() {
 		List<Category> list = repository.findAll(); 
 		
-		return list.stream().map(x -> new CategoryDTO(x)).toList();
+		return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
 		
 	}
 	
