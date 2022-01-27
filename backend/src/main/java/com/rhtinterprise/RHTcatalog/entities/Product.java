@@ -1,5 +1,7 @@
 package com.rhtinterprise.RHTcatalog.entities;
 
+import com.rhtinterprise.RHTcatalog.dto.ProductDTO;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -20,14 +22,14 @@ public class Product implements Serializable {
     private String description;
     private Double price;
     private String imgUrl;
-
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Instant date;
     @ManyToMany
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name="product_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"))
     Set<Category> categories = new HashSet<>();
 
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant date;
+
 
     public Product() {
 
@@ -92,6 +94,13 @@ public class Product implements Serializable {
     public Set<Category> getCategories() {
         return categories;
     }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+
+
 
     @Override
     public boolean equals(Object o) {

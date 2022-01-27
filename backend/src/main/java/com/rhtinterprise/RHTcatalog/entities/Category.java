@@ -1,5 +1,7 @@
 package com.rhtinterprise.RHTcatalog.entities;
 
+import com.rhtinterprise.RHTcatalog.dto.CategoryDTO;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
@@ -37,6 +39,11 @@ public class Category implements Serializable {
 	public Category(Long id, String name) {
 		this.id = id;
 		this.name = name;
+	}
+
+	public Category(CategoryDTO categoryDTO) {
+		this.id = categoryDTO.getId();
+		this.name = categoryDTO.getName();
 	}
 
 	public Long getId() {

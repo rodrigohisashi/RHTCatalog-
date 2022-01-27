@@ -5,6 +5,7 @@ import com.rhtinterprise.RHTcatalog.entities.Product;
 
 import javax.persistence.Column;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +19,7 @@ public class ProductDTO implements Serializable {
 	private String description;
 	private Double price;
 	private String imgUrl;
+	private Instant date;
 
 	private List<CategoryDTO> categories = new ArrayList<>();
 
@@ -25,13 +27,16 @@ public class ProductDTO implements Serializable {
 
 	}
 
-	public ProductDTO(Long id, String name, String description, Double price, String imgUrl) {
+	public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.price = price;
 		this.imgUrl = imgUrl;
+		this.date = date;
 	}
+
+
 
 	public ProductDTO(Product product) {
 		this.id = product.getId();
@@ -39,6 +44,7 @@ public class ProductDTO implements Serializable {
 		this.description = product.getDescription();
 		this.price = product.getPrice();
 		this.imgUrl = product.getImgUrl();
+		this.date = product.getDate();
 	}
 	public ProductDTO(Product product, Set<Category> categories) {
 		this(product);
@@ -87,6 +93,10 @@ public class ProductDTO implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
+	public List<CategoryDTO> getCategories() {
+		return categories;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -98,5 +108,13 @@ public class ProductDTO implements Serializable {
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
+	}
+
+	public Instant getDate() {
+		return date;
+	}
+
+	public void setDate(Instant date) {
+		this.date = date;
 	}
 }
