@@ -1,5 +1,6 @@
 package com.rhtinterprise.RHTcatalog.repositories;
 
+import com.rhtinterprise.RHTcatalog.Factory;
 import com.rhtinterprise.RHTcatalog.entities.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 
-import java.util.EmptyStackException;
 import java.util.Optional;
 
 @DataJpaTest
