@@ -1,13 +1,18 @@
 package com.rhtinterprise.RHTcatalog.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rhtinterprise.RHTcatalog.dto.ProductDTO;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import static com.rhtinterprise.RHTcatalog.util.Constantes.FORMATO_DATA_HORA;
 
 @Entity
 @Table(name = "tb_product")
@@ -23,7 +28,8 @@ public class Product implements Serializable {
     private Double price;
     private String imgUrl;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant date;
+    @JsonFormat(pattern = FORMATO_DATA_HORA)
+    private LocalDateTime date;
     @ManyToMany
     @JoinTable(name = "tb_product_category", joinColumns = @JoinColumn(name="product_id"),
     inverseJoinColumns = @JoinColumn(name = "category_id"))
@@ -34,7 +40,7 @@ public class Product implements Serializable {
     public Product() {
 
     }
-    public Product(Long id, String name, String description, Double price, String imgUrl, Instant date) {
+    public Product(Long id, String name, String description, Double price, String imgUrl, LocalDateTime date) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -83,11 +89,11 @@ public class Product implements Serializable {
         this.imgUrl = imgUrl;
     }
 
-    public Instant getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Instant date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

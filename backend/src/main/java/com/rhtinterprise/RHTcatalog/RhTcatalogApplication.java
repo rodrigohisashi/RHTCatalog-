@@ -10,4 +10,6 @@ public class RhTcatalogApplication {
 		SpringApplication.run(RhTcatalogApplication.class, args);
 	}
 
+
+
 }

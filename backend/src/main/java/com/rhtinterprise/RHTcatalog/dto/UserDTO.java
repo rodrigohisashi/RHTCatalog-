@@ -2,6 +2,8 @@ package com.rhtinterprise.RHTcatalog.dto;
 
 import com.rhtinterprise.RHTcatalog.entities.User;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -10,7 +12,9 @@ import java.util.Set;
 public class UserDTO {
     private Long id;
     private String firstName;
+    @NotBlank
     private String lastName;
+    @Email
     private String email;
 
     private Set<RoleDTO> roles = new HashSet<>();

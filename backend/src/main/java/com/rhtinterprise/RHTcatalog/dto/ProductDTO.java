@@ -1,25 +1,40 @@
 package com.rhtinterprise.RHTcatalog.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.rhtinterprise.RHTcatalog.entities.Category;
 import com.rhtinterprise.RHTcatalog.entities.Product;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import static com.rhtinterprise.RHTcatalog.util.Constantes.FORMATO_DATA_HORA;
+
 public class ProductDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Long id;
+	@NotBlank(message = "Campo Requirido")
+	@Size(min = 5, max = 60)
 	private String name;
+	@NotBlank(message = "Campo Requirido")
 	private String description;
+	@Positive(message = "Preço deve ser positivo!")
 	private Double price;
 	private String imgUrl;
-	private Instant date;
+	@PastOrPresent(message = "A data do produto não deve ser futura")
+	@JsonFormat(pattern = FORMATO_DATA_HORA)
+	private LocalDateTime date;
 
 	private List<CategoryDTO> categories = new ArrayList<>();
 
@@ -27,7 +42,7 @@ public class ProductDTO implements Serializable {
 
 	}
 
-	public ProductDTO(Long id, String name, String description, Double price, String imgUrl, Instant date) {
+	public ProductDTO(Long id, String name, String description, Double price, String imgUrl, LocalDateTime date) {
 		this.id = id;
 		this.name = name;
 		this.description = description;
@@ -110,11 +125,11 @@ public class ProductDTO implements Serializable {
 		return Objects.hash(id);
 	}
 
-	public Instant getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(Instant date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
 }
