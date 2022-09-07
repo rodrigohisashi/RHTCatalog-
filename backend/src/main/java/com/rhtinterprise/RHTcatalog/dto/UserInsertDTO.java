@@ -1,11 +1,8 @@
 package com.rhtinterprise.RHTcatalog.dto;
 
-import com.rhtinterprise.RHTcatalog.entities.User;
+import com.rhtinterprise.RHTcatalog.services.validation.UserInsertValid;
 
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
+@UserInsertValid
 public class UserInsertDTO extends UserDTO{
   private String password;
 
