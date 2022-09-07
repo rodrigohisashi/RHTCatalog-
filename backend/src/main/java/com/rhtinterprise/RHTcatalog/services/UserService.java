@@ -1,15 +1,13 @@
 package com.rhtinterprise.RHTcatalog.services;
 
-import com.rhtinterprise.RHTcatalog.dto.CategoryDTO;
 import com.rhtinterprise.RHTcatalog.dto.RoleDTO;
 import com.rhtinterprise.RHTcatalog.dto.UserDTO;
 import com.rhtinterprise.RHTcatalog.dto.UserInsertDTO;
-import com.rhtinterprise.RHTcatalog.entities.Category;
+import com.rhtinterprise.RHTcatalog.dto.UserUpdateDTO;
 import com.rhtinterprise.RHTcatalog.entities.Role;
 import com.rhtinterprise.RHTcatalog.entities.User;
 import com.rhtinterprise.RHTcatalog.exceptions.DataBaseException;
 import com.rhtinterprise.RHTcatalog.exceptions.ResourceNotFoundException;
-import com.rhtinterprise.RHTcatalog.repositories.CategoryRepository;
 import com.rhtinterprise.RHTcatalog.repositories.RoleRepository;
 import com.rhtinterprise.RHTcatalog.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +59,7 @@ public class UserService {
 	}
 	
 	@Transactional
-	public UserDTO update(Long id, UserDTO dto) {
+	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
 			User entity = repository.getById(id);
 			setUser(dto, entity);
