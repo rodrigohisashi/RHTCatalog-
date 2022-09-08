@@ -10,11 +10,15 @@ import com.rhtinterprise.RHTcatalog.exceptions.DataBaseException;
 import com.rhtinterprise.RHTcatalog.exceptions.ResourceNotFoundException;
 import com.rhtinterprise.RHTcatalog.repositories.RoleRepository;
 import com.rhtinterprise.RHTcatalog.repositories.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +27,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
-public class UserService {
+@Slf4j
+public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private UserRepository repository;
@@ -94,4 +99,14 @@ public class UserService {
 		}
 	}
 
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = repository.findByEmail(username);
+		if (null == user) {
+			log.error("User not found: " + username);
+			throw new UsernameNotFoundException("Email não encontrado");
+		}
+		log.info("User found: " + username);
+		return user;
+	}
 }
