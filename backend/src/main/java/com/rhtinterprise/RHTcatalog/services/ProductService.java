@@ -6,13 +6,13 @@ import com.rhtinterprise.RHTcatalog.entities.Category;
 import com.rhtinterprise.RHTcatalog.entities.Product;
 import com.rhtinterprise.RHTcatalog.exceptions.DataBaseException;
 import com.rhtinterprise.RHTcatalog.exceptions.ResourceNotFoundException;
+import com.rhtinterprise.RHTcatalog.mapper.ProductMapper;
 import com.rhtinterprise.RHTcatalog.repositories.CategoryRepository;
 import com.rhtinterprise.RHTcatalog.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,12 +28,11 @@ public class ProductService {
 
 	@Autowired
 	private CategoryRepository categoryRepository;
+
 	
 	@Transactional(readOnly = true)
 	public Page<ProductDTO> findAllPaged(Pageable pageable) {
-		Page<Product> list = repository.findAll(pageable);
-		
-		return list.map(x -> new ProductDTO(x, x.getCategories()));
+		return repository.findAll(pageable).map(ProductMapper.INSTANCE::productToProductDTO);
 		
 	}
 	
@@ -41,7 +40,7 @@ public class ProductService {
 	public ProductDTO findById(long id) {
 		Optional<Product> obj = repository.findById(id);
 		Product entity = obj.orElseThrow(() -> new ResourceNotFoundException("Entidade não encontrada!"));
-		return new ProductDTO(entity, entity.getCategories());
+		return ProductMapper.INSTANCE.productToProductDTO(entity);
 	}
 
 	@Transactional
@@ -49,7 +48,7 @@ public class ProductService {
 		Product entity = new Product();
 		setProduct(dto, entity);
 		entity = repository.save(entity);
-		return new ProductDTO(entity);
+		return ProductMapper.INSTANCE.productToProductDTO(entity);
 	}
 	
 	@Transactional
@@ -58,7 +57,7 @@ public class ProductService {
 			Product entity = repository.getById(id);
 			setProduct(dto, entity);
 			entity = repository.save(entity);
-			return new ProductDTO(entity);
+			return ProductMapper.INSTANCE.productToProductDTO(entity);
 		} catch(EntityNotFoundException e) {
 			throw new ResourceNotFoundException("O id " + id + " não foi encontrado." );
 		}
