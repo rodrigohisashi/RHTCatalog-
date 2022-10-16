@@ -83,7 +83,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 			err.addError(fieldError.getField(), fieldError.getDefaultMessage());
 		});
 		err.setPath(request.getContextPath());
-		return ResponseEntity.status(status).body(err);
+		return ResponseEntity.status(statuss).body(err);
 
 	}
 }

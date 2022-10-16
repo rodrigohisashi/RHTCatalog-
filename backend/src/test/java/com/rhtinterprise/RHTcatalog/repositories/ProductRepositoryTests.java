@@ -1,6 +1,6 @@
 package com.rhtinterprise.RHTcatalog.repositories;
 
-import com.rhtinterprise.RHTcatalog.Factory;
+import com.rhtinterprise.RHTcatalog.tests.Factory;
 import com.rhtinterprise.RHTcatalog.entities.Product;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

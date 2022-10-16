@@ -1,14 +1,14 @@
-package com.rhtinterprise.RHTcatalog;
+package com.rhtinterprise.RHTcatalog.tests;
 
 import com.rhtinterprise.RHTcatalog.dto.ProductDTO;
 import com.rhtinterprise.RHTcatalog.entities.Category;
 import com.rhtinterprise.RHTcatalog.entities.Product;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class Factory {
     public static Product createProduct() {
-        Product product = new Product(1L, "Phone", "Good Phone", 800.0, "http://img.com/img.png", Instant.parse("2020-10-20T03:00:00Z"));
+        Product product = new Product(1L, "Phone", "Good Phone", 800.0, "http://img.com/img.png", LocalDateTime.of(2012, 02, 12, 2 ,2, 2));
         product.getCategories().add(createCategory());
         return product;
     }
